@@ -4,7 +4,14 @@
 #include "TlsClient.h"
 #include <iostream>
 #include <string>
-
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Net/Context.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/SharedPtr.h>
 using namespace std;
 
 int main(int argc, char* argv[]) {
