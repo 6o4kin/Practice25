@@ -1,0 +1,24 @@
+# CMake build folders
+build/
+out/
+CMakeBuild/
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+*.sln
+*.vcxproj*
+*.user
+*.obj
+*.pdb
+*.exe
+*.log
+
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Cert/key files
+*.pem
+*.crt
+*.key
