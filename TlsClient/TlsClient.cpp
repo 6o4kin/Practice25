@@ -71,6 +71,23 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    std::string serverAddress;
+    int serverPort;
+
+    std::cout << "Введите IP-адрес сервера: ";
+    std::getline(std::cin, serverAddress);
+
+    std::cout << "Введите порт сервера (например, 443): ";
+    std::cin >> serverPort;
+
+    if (serverAddress.empty() || serverPort <= 0 || serverPort > 65535) {
+        std::cerr << "Некорректный IP-адрес или порт.\n";
+        return 1;
+    }
+
+    std::cout << "Попытка подключения к " << serverAddress << ":" << serverPort << "...\n";
+
+
     return 0;
 }
 
