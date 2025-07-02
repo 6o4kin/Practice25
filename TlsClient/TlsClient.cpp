@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Enter a server port (example: 443): ";
     std::cin >> serverPort;
+    std::cin.ignore(); // Очистить '\n' после ввода порта
 
     if (serverAddress.empty() || serverPort <= 0 || serverPort > 65535) {
         std::cerr << "Incorrect IP or port.\n";
@@ -92,7 +93,6 @@ int main(int argc, char* argv[]) {
 
         DialogSocket dialog(socket);
 
-        cin.ignore(); // Очистить '\n' после ввода порта
         string input;
 
         cout << "Enter a message (or 'exit' to leave):\n";
@@ -103,11 +103,11 @@ int main(int argc, char* argv[]) {
 
             dialog.sendBytes(input.data(), static_cast<int>(input.size()));
 
-            char buffer[4096] = { 0 };
-            int received = dialog.receiveBytes(buffer, sizeof(buffer) - 1);
-            buffer[received] = '\0';
+            //char buffer[4096] = { 0 };
+            //int received = dialog.receiveBytes(buffer, sizeof(buffer) - 1);
+            //buffer[received] = '\0';
 
-            cout << "Server answered: " << buffer << "\n";
+            //cout << "Server answered: " << buffer << "\n";
         }
 
         dialog.close();
