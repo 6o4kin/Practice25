@@ -64,28 +64,58 @@ int main(int argc, char* argv[]) {
             context
         );
 
-        std::cout << "TLS-контекст успешно инициализирован\n";
+        std::cout << "TLS-context initialized succesfully\n";
     }
     catch (const Exception& ex) {
-        std::cerr << "Ошибка TLS: " << ex.displayText() << std::endl;
+        std::cerr << "Error TLS: " << ex.displayText() << std::endl;
         return 1;
     }
 
     std::string serverAddress;
     int serverPort;
 
-    std::cout << "Введите IP-адрес сервера: ";
+    std::cout << "Enter a server IP: ";
     std::getline(std::cin, serverAddress);
 
-    std::cout << "Введите порт сервера (например, 443): ";
+    std::cout << "Enter a server port (example: 443): ";
     std::cin >> serverPort;
 
     if (serverAddress.empty() || serverPort <= 0 || serverPort > 65535) {
-        std::cerr << "Некорректный IP-адрес или порт.\n";
+        std::cerr << "Incorrect IP or port.\n";
         return 1;
     }
 
-    std::cout << "Попытка подключения к " << serverAddress << ":" << serverPort << "...\n";
+    try {
+        SecureStreamSocket socket;
+        socket.connect(SocketAddress(serverAddress, serverPort));
+        cout << "TLS-connection started\n";
+
+        DialogSocket dialog(socket);
+
+        cin.ignore(); // Очистить '\n' после ввода порта
+        string input;
+
+        cout << "Enter a message (or 'exit' to leave):\n";
+        while (true) {
+            cout << "> ";
+            getline(cin, input);
+            if (input == "exit") break;
+
+            dialog.sendBytes(input.data(), static_cast<int>(input.size()));
+
+            char buffer[4096] = { 0 };
+            int received = dialog.receiveBytes(buffer, sizeof(buffer) - 1);
+            buffer[received] = '\0';
+
+            cout << "Server answered: " << buffer << "\n";
+        }
+
+        dialog.close();
+    }
+    catch (const Exception& ex) {
+        cerr << "Connection error: " << ex.displayText() << endl;
+        return 1;
+    }
 
 
     return 0;
