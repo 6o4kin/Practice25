@@ -19,6 +19,7 @@
 #include <Poco/Net/DialogSocket.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/Exception.h>
+#include <iomanip>
 
 using namespace std;
 using namespace Poco::Net;

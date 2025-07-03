@@ -18,7 +18,3 @@ CMakeCache.txt
 *.VC.db
 *.VC.VC.opendb
 
-# Cert/key files
-*.pem
-*.crt
-*.key

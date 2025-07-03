@@ -1,20 +1,24 @@
-﻿# CMakeList.txt: проект CMake для TlsClient; включите исходный код и определения,
-# укажите здесь логику для конкретного проекта.
-#
+﻿cmake_minimum_required(VERSION 3.8)
 
-# Добавьте источник в исполняемый файл этого проекта.
-add_executable (TlsClient "TlsClient.cpp" "TlsClient.h")
+project("TlsClient")
 
-target_link_libraries(TlsClient PRIVATE
-    Poco::Foundation
-    Poco::Net
-    Poco::NetSSL
-    Poco::Crypto
-    Poco::Util
+find_package(Poco REQUIRED COMPONENTS Util Net NetSSL Foundation Crypto)
+
+# Добавляем исполняемый файл
+add_executable(TlsClient 
+    "TlsClient.cpp" 
+    "TlsClient.h"
 )
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET TlsClient PROPERTY CXX_STANDARD 17)
-endif()
+# Устанавливаем стандарт C++20
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+# Подключаем библиотеки POCO
+target_link_libraries(TlsClient PRIVATE
+    Poco::Util
+    Poco::Net
+    Poco::NetSSL
+    Poco::Foundation
+    Poco::Crypto
+)
